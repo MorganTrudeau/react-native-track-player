@@ -149,9 +149,14 @@ class MediaWrapper: AudioPlayerDelegate {
             play()
             return true
         }
-        
+        else if queue.indices.contains(0) {
+            currentIndex = 0
+            play()
+            return true
+        }
         stop()
         return false
+        
     }
     
     func playPrevious() -> Bool {
@@ -160,9 +165,14 @@ class MediaWrapper: AudioPlayerDelegate {
             play()
             return true
         }
-        
+        else queue.indices.contains(queue.count - 1) {
+            currentIndex = queue.count - 1
+            play()
+            return true
+        }
         stop()
         return false
+    
     }
     
     func play() {
