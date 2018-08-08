@@ -165,7 +165,7 @@ class MediaWrapper: AudioPlayerDelegate {
             play()
             return true
         }
-        else queue.indices.contains(queue.count - 1) {
+        else if queue.indices.contains(queue.count - 1) {
             currentIndex = queue.count - 1
             play()
             return true
