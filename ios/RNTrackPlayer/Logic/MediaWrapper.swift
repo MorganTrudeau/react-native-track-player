@@ -160,6 +160,10 @@ class MediaWrapper: AudioPlayerDelegate {
     }
     
     func playPrevious() -> Bool {
+        if queue.count == 0 || currentItemProgression > 8 {
+            play()
+            return true
+        }
         if queue.indices.contains(currentIndex - 1) {
             currentIndex = currentIndex - 1
             play()
