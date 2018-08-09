@@ -19,6 +19,7 @@ protocol MediaWrapperDelegate: class {
 class MediaWrapper: AudioPlayerDelegate {
     private(set) var queue: [Track]
     private var currentIndex: Int
+    private var nextIndex: Int
     private let player: AudioPlayer
     private var trackImageTask: URLSessionDataTask?
     
@@ -82,6 +83,7 @@ class MediaWrapper: AudioPlayerDelegate {
     init() {
         self.queue = []
         self.currentIndex = -1
+        self.nextIndex = -1
         self.player = AudioPlayer()
         
         self.player.delegate = self
@@ -125,9 +127,9 @@ class MediaWrapper: AudioPlayerDelegate {
         }
         
         switch actionAfterRemovals {
-            case "play": play()
-            case "stop": stop()
-            default: break;
+        case "play": play()
+        case "stop": stop()
+        default: break;
         }
     }
     
@@ -138,19 +140,19 @@ class MediaWrapper: AudioPlayerDelegate {
     func skipToTrack(id: String) {
         if let trackIndex = queue.index(where: { $0.id == id }) {
             currentTrack?.skipped = true
-            currentIndex = trackIndex
+            nextIndex = trackIndex
             play()
         }
     }
     
     func playNext() -> Bool {
         if queue.indices.contains(currentIndex + 1) {
-            currentIndex = currentIndex + 1
+            nextIndex = currentIndex + 1
             play()
             return true
         }
         else if queue.indices.contains(0) {
-            currentIndex = 0
+            nextIndex = 0
             play()
             return true
         }
@@ -161,36 +163,38 @@ class MediaWrapper: AudioPlayerDelegate {
     
     func playPrevious() -> Bool {
         if queue.count == 0 || currentTrackProgression > 8 {
+            currentIndex = -1
             play()
             return true
         }
         if queue.indices.contains(currentIndex - 1) {
-            currentIndex = currentIndex - 1
+            nextIndex = currentIndex - 1
             play()
             return true
         }
         else if queue.indices.contains(queue.count - 1) {
-            currentIndex = queue.count - 1
+            nextIndex = queue.count - 1
             play()
             return true
         }
         stop()
         return false
-    
+        
     }
     
     func play() {
         guard queue.count > 0 else { return }
-        if (currentIndex == -1) { currentIndex = 0 }
+        if (nextIndex == -1) { nextIndex = 0 }
         
         // resume playback if it was paused and check currentIndex wasn't changed by a skip/previous
-        if player.state == .paused && currentTrack?.id == queue[currentIndex].id {
+        if player.state == .paused && currentTrack?.id == queue[nextIndex].id {
             player.resume()
             return
         }
         
-        let track = queue[currentIndex]
+        let track = queue[nextIndex]
         player.play(track: track)
+        currentIndex = nextIndex
         
         setPitchAlgorithm(for: track)
         
@@ -203,7 +207,7 @@ class MediaWrapper: AudioPlayerDelegate {
                 }
             })
         }
-
+        
         trackImageTask?.resume()
     }
     
@@ -264,3 +268,4 @@ class MediaWrapper: AudioPlayerDelegate {
         }
     }
 }
+
