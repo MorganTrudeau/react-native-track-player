@@ -160,7 +160,7 @@ class MediaWrapper: AudioPlayerDelegate {
     }
     
     func playPrevious() -> Bool {
-        if queue.count == 0 || currentItemProgression > 8 {
+        if queue.count == 0 || currentTrackProgression > 8 {
             play()
             return true
         }
