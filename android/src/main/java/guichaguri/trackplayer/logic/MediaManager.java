@@ -161,6 +161,7 @@ public class MediaManager {
 
         // Set the service as background, keeping the notification
         service.stopForeground(false);
+        metadata.getNotification().setShowing(false);
 
         if(!playback.isRemote()) {
             // Release the wake lock
