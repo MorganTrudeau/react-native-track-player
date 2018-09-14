@@ -135,8 +135,8 @@ class RNTrackPlayer: RCTEventEmitter, MediaWrapperDelegate {
         let enableStop = true // capabilities.contains(.stop)
         let enablePause = true // capabilities.contains(.pause)
         let enablePlay = true // capabilities.contains(.play)
-        let enablePlayNext = true // capabilities.contains(.next)
-        let enablePlayPrevious = true // capabilities.contains(.previous)
+        let enablePlayNext = false // capabilities.contains(.next)
+        let enablePlayPrevious = false // capabilities.contains(.previous)
         let enableSkipForward = false // capabilities.contains(.jumpForward)
         let enableSkipBackward = false // capabilities.contains(.jumpBackward)
         
