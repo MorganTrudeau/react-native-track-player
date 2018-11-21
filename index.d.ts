@@ -39,7 +39,7 @@ declare namespace RNTrackPlayer {
     | 'remote-previous'
     | 'remote-jump-forward'
     | 'remote-jump-backward'
-  
+
   type Handler = (type: EventType, ...args: any[]) => void;
   export function registerEventHandler(handler: Handler): void;
 
@@ -62,6 +62,7 @@ declare namespace RNTrackPlayer {
     artwork?: string;
     sendUrl?: boolean;
     [key: string]: any;
+    repeatTimes: number;
   }
 
   export function add(tracks: Track|Track[], insertBeforeId?: string): Promise<void>;

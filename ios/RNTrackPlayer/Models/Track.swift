@@ -25,6 +25,7 @@ class Track: NSObject {
     var skipped: Bool = false
     dynamic let album: String?
     dynamic var artwork: MPMediaItemArtwork?
+    let repeatTimes: Int?
     
     private let originalObject: [String: Any]
     
@@ -40,6 +41,7 @@ class Track: NSObject {
         self.title = title
         self.artist = artist
         
+        self.repeatTimes = dictionary["repeatTimes"] as? Int
         self.date = dictionary["date"] as? String
         self.album = dictionary["album"] as? String
         self.genre = dictionary["genre"] as? String

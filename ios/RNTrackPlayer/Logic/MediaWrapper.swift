@@ -22,6 +22,8 @@ class MediaWrapper: AudioPlayerDelegate {
     private var nextIndex: Int
     private let player: AudioPlayer
     private var trackImageTask: URLSessionDataTask?
+    private var repeatCap: Int?
+    private var repeatCount: Int?
     
     weak var delegate: MediaWrapperDelegate?
     
@@ -193,6 +195,21 @@ class MediaWrapper: AudioPlayerDelegate {
         }
         
         let track = queue[nextIndex]
+
+        if (currentIndex == -1 || currentTrack?.id != track.id) && (track.repeatTimes != nil) {
+            repeatCap = track.repeatTimes!
+            repeatCount = 1
+        }
+        else if track.repeatTimes != nil {
+            repeatCount =  repeatCount! + 1
+        }
+
+        guard track.repeatTimes == nil || track.repeatTimes! >= repeatCount! else {
+            repeatCount = 0
+            pause()
+            return
+        }
+
         player.play(track: track)
         currentIndex = nextIndex
         
