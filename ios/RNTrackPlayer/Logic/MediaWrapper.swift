@@ -151,11 +151,6 @@ class MediaWrapper: AudioPlayerDelegate {
             play()
             return true
         }
-        else if queue.indices.contains(0) {
-            nextIndex = 0
-            play()
-            return true
-        }
         stop()
         return false
         
