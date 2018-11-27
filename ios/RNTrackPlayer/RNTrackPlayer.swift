@@ -137,8 +137,8 @@ class RNTrackPlayer: RCTEventEmitter, MediaWrapperDelegate {
         let enablePlay = true // capabilities.contains(.play)
         let enablePlayNext = false // capabilities.contains(.next)
         let enablePlayPrevious = false // capabilities.contains(.previous)
-        let enableSkipForward = false // capabilities.contains(.jumpForward)
-        let enableSkipBackward = false // capabilities.contains(.jumpBackward)
+        let enableSkipForward = true // capabilities.contains(.jumpForward)
+        let enableSkipBackward = true // capabilities.contains(.jumpBackward)
         
         toggleRemoteHandler(command: remoteCenter.stopCommand, selector: #selector(remoteSentStop), enabled: enableStop)
         toggleRemoteHandler(command: remoteCenter.pauseCommand, selector: #selector(remoteSentPause), enabled: enablePause)
